@@ -1,4 +1,5 @@
-import {PokeApi} from './components/PokeApi/PokeApi'
+import {PokeApi} from './components/PokeApi/Pokeapi'
+import { ProductList } from './components/ProductList/ProductList'
 import './App.css'
 
 function App() {
@@ -6,7 +7,8 @@ function App() {
   return (
     <>
       <div>
-        <PokeApi/>
+        {/* <PokeApi/> */}
+        <ProductList/>
       </div>
     </>
   )
