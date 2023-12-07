@@ -1,28 +1,24 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom';
-import './style.css'
+import './ItemDetailContainer.css'
 import { pedirProductos } from '../../helpers/pedirProductos';
-import { ItemList } from '../ItemList/ItemList';
+import {ItemDetail} from '../ItemDetail/ItemDetail'
 
 
-export const ItemListContainer = () => {
+export const ItemDetailContainer = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const [items, setItems] = useState([]);
+    const [item, setItem] = useState(null);
 
-    const {categoryId} = useParams();
+    const {itemId} = useParams();
 
     useEffect(() => {
         setLoading(true)
         pedirProductos()
             .then((res) => {
-                if(categoryId){
-                    setItems(res.filter(prod => prod.category === categoryId))
-                }else{
-                    setItems(res)
-                }
+                    setItem(res.find(prod => prod.id === Number(itemId)))
             })
             .catch((error) => {
                 Swal.fire(`Tienes un error!, ${error}`);
@@ -30,7 +26,7 @@ export const ItemListContainer = () => {
             .finally(() => {
                 setLoading(false)
             })
-    }, [categoryId])
+    }, [itemId])
 
 
     return (
@@ -39,7 +35,11 @@ export const ItemListContainer = () => {
                 {
                     loading
                         ? <h3>Cargando...</h3>
-                        : <ItemList productos={items}/>
+                        : (
+                            <div className='padre'>
+                               <ItemDetail {...item}/>
+                            </div>
+                        )
                 }
             </>
         </div>
