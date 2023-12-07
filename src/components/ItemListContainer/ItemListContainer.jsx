@@ -1,21 +1,28 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
+import {useParams} from 'react-router-dom';
 import './style.css'
 import { Counter } from '../Counter/Counter';
 import { pedirProductos } from '../../helpers/pedirProductos';
 
 
-export const ProductList = () => {
+export const ItemListContainer = () => {
 
     const [loading, setLoading] = useState(false);
 
     const [items, setItems] = useState([]);
 
+    const {categoryId} = useParams();
+
     useEffect(() => {
         setLoading(true)
         pedirProductos()
             .then((res) => {
-                setItems(res)
+                if(categoryId){
+                    setItems(res.filter(prod => prod.category === categoryId))
+                }else{
+                    setItems(res)
+                }
             })
             .catch((error) => {
                 Swal.fire(`Tienes un error!, ${error}`);
@@ -23,7 +30,7 @@ export const ProductList = () => {
             .finally(() => {
                 setLoading(false)
             })
-    }, [])
+    }, [categoryId])
 
 
     return (

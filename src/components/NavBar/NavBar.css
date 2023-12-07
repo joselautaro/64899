@@ -1,0 +1,11 @@
+nav{
+    display: flex;
+    justify-content: space-around;
+    
+}
+nav .link{
+    font-size: medium;
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+}
